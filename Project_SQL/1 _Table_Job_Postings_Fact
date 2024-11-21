@@ -1,0 +1,2 @@
+Select * from job_postings_fact
+Limit 30;
