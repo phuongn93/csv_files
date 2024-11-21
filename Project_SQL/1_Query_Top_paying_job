@@ -1,11 +1,11 @@
-*/ Question: What are the top-paying data analyst jobs?
--- Identify the top 10 highest paying data analyst roles that are available remotely and no degree needed and being in Houston, Texas.
--- Focuses on job posting with specified salaries (remote nulls)
-
+*/Question: What are the top-paying data analyst jobs?
+- Identify the top 10 highest paying data analyst roles that are available remotely and no degree needed and being in Houston, Texas.
+- Focuses on job posting with specified salaries (remote nulls)
+/*
 
 Select 
- job_title_short, job_location,search_location, job_work_from_home as remoted_job, job_no_degree_mention, salary_year_avg
+ job_id, company_id, job_title_short, job_location,search_location, job_work_from_home as remoted_job, job_no_degree_mention, salary_year_avg, job_posted_date
 from job_postings_fact
 where
- job_title_short = 'Data Analyst' and job_location = 'Anywhere' and search_location like '%United States%' and job_no_degree_mention = 'true' and salary_year_avg is not null
+ job_title_short = 'Data Analyst' and job_location = 'Anywhere' and search_location = 'Texas, United States' and job_no_degree_mention = 'true' and salary_year_avg is not null
 order by salary_year_avg DESC;

@@ -1,0 +1,34 @@
+*/ What companies in Texas did they hire remoted data analyst with entry level? 
+select
+  job_postings_fact.job_id,
+  company_dim.company_id,
+  job_postings_fact.job_title_short as job_title,
+  job_postings_fact.job_location as location,
+  job_postings_fact.search_location as State_USA, 
+  job_postings_fact.job_work_from_home as remoted_job, 
+  job_postings_fact.job_no_degree_mention as no_degree, 
+  job_postings_fact.salary_year_avg as salary_year_avg, 
+  job_postings_fact.job_posted_date, company_dim.name,company_dim.link
+
+from job_postings_fact
+
+full outer join company_dim on job_postings_fact.company_id = company_dim.company_id
+
+where
+ job_title_short = 'Data Analyst' and job_location = 'Anywhere' and search_location = 'Texas, United States' and job_no_degree_mention = 'true' and salary_year_avg is not null
+
+order by salary_year_avg DESC;
+
+select
+  count(company_dim.company_id) as company_count, 
+  company_dim.name
+
+from job_postings_fact
+
+full outer join company_dim on job_postings_fact.company_id = company_dim.company_id
+where
+job_title_short = 'Data Analyst' and job_location = 'Anywhere' and search_location = 'Texas, United States' and job_no_degree_mention = 'true'
+group by company_dim.name
+order by company_count DESC
+limit 100;
+
