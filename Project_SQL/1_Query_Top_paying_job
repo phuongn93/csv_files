@@ -1,5 +1,5 @@
 */Question: What are the top-paying data analyst jobs?
-- Identify the top 10 highest paying data analyst roles that are available remotely and no degree needed and being in Houston, Texas.
+- Identify the data analyst roles that are available remotely and no degree needed and being in Houston, Texas.
 - Focuses on job posting with specified salaries (remote nulls)
 /*
 
@@ -7,5 +7,36 @@ Select
  job_id, company_id, job_title_short, job_location,search_location, job_work_from_home as remoted_job, job_no_degree_mention, salary_year_avg, job_posted_date
 from job_postings_fact
 where
- job_title_short = 'Data Analyst' and job_location = 'Anywhere' and search_location = 'Texas, United States' and job_no_degree_mention = 'true' and salary_year_avg is not null
+ job_title_short = 'Data Analyst' and job_location = 'Anywhere' and job_no_degree_mention = 'true' and salary_year_avg is not null
 order by salary_year_avg DESC;
+
+*/ what is the max, min and avg of salary_year_avg of remoted data analyst jobs?
+
+Select
+ max(salary_year_avg) as maximum_salary,
+ min(salary_year_avg) as minimum_salary,
+ round(avg(salary_year_avg),2) as Avg_Salary
+
+from (
+Select 
+ job_id, company_id, job_title_short, job_location,search_location, job_work_from_home as remoted_job, job_no_degree_mention, salary_year_avg, job_posted_date
+from job_postings_fact
+where
+ job_title_short = 'Data Analyst' and job_location = 'Anywhere' and job_no_degree_mention = 'true' and salary_year_avg is not null
+order by salary_year_avg DESC
+)
+
+*/ which job_location did they hire remoted and non-remoted data analysts at the entry level?/*
+
+Select 
+ job_location,
+ count (job_id),
+ round(avg (salary_year_avg),2) as TX_Avg_Salary
+from job_postings_fact
+where
+ job_title_short = 'Data Analyst' and job_no_degree_mention = 'true' and salary_year_avg is not null
+ group by job_location
+ order by count DESC
+ limit 10;
+
+
