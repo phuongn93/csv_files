@@ -31,8 +31,8 @@ Select
  job_location,
  count (job_id),
  round(avg (salary_year_avg),2) as TX_Avg_Salary
-from job_postings_fact
-where
+From job_postings_fact
+Where
  job_title_short = 'Data Analyst' and job_no_degree_mention = 'true' and salary_year_avg is not null
  group by job_location
  order by count DESC
