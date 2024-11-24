@@ -1,36 +1,34 @@
-*/Question: What are the top-paying data analyst jobs?
-- Identify the data analyst roles that are available remotely and no degree needed and being in Houston, Texas.
+Question: What are the top-paying data analyst jobs?
+- Identify the data analyst roles that are available with no degree needed and being in Houston, Texas.
 - Focuses on job posting with specified salaries (remote nulls)
-/*
 
 Select 
  job_id, company_id, job_title_short, job_location,search_location, job_work_from_home as remoted_job, job_no_degree_mention, salary_year_avg, job_posted_date
 from job_postings_fact
 where
- job_title_short = 'Data Analyst' and job_location = 'Anywhere' and job_no_degree_mention = 'true' and salary_year_avg is not null
+ job_title_short = 'Data Analyst' and job_no_degree_mention = 'true' and salary_year_avg is not null
 order by salary_year_avg DESC;
 
-*/What is the max, min, and avg of salary_year_avg of remoted data analyst jobs?
+What is the max, min, and avg of salary_year_avg of remoted data analyst jobs?
 
 Select
  max(salary_year_avg) as maximum_salary,
  min(salary_year_avg) as minimum_salary,
  round(avg(salary_year_avg),2) as Avg_Salary
 From (
-Select 
+select
  job_id, company_id, job_title_short, job_location,search_location, job_work_from_home as remoted_job, job_no_degree_mention, salary_year_avg, job_posted_date
 from job_postings_fact
 where
- job_title_short = 'Data Analyst' and job_location = 'Anywhere' and job_no_degree_mention = 'true' and salary_year_avg is not null
-order by salary_year_avg DESC
-)
+ job_title_short = 'Data Analyst' and job_no_degree_mention = 'true' and salary_year_avg is not null
+order by salary_year_avg DESC)
 
-*/Which job location did they hire remoted and non-remoted data analysts at the entry-level?/*
+Which job location did they hire remoted and non-remoted data analysts at the entry-level?/*
 
 Select 
  job_location,
  count (job_id),
- round(avg (salary_year_avg),2) as TX_Avg_Salary
+ round(avg (salary_year_avg),2) as Avg_Salary
 From job_postings_fact
 Where
  job_title_short = 'Data Analyst' and job_no_degree_mention = 'true' and salary_year_avg is not null

@@ -1,0 +1,62 @@
+*/ What companies did they hire data analyst at entry-level? 
+
+select
+  job_postings_fact.job_id,
+  company_dim.company_id,
+  job_postings_fact.job_title_short as job_title,
+  job_postings_fact.job_location as location,
+  job_postings_fact.search_location as State_USA, 
+  job_postings_fact.job_work_from_home as remoted_job, 
+  job_postings_fact.job_no_degree_mention as no_degree, 
+  job_postings_fact.salary_year_avg as salary_year_avg, 
+  job_postings_fact.job_posted_date, company_dim.name,company_dim.link
+
+from job_postings_fact
+
+full outer join company_dim on job_postings_fact.company_id = company_dim.company_id
+
+where
+ job_title_short = 'Data Analyst' and job_no_degree_mention = 'true' and salary_year_avg is not null
+
+order by salary_year_avg;
+ 
+
+*/ How many entry-level jobs are they remoted and onsite?
+select
+ case 
+  when job_location = 'Anywhere' then 'remoted_job'
+  Else 'Onsite'
+ End as location_category,
+ count (job_id)
+ from job_postings_fact
+ where
+ job_title_short = 'Data Analyst' and job_no_degree_mention = 'true' and salary_year_avg is not null
+group by location_category;
+
+*/How many not entry-level jobs are they remoted and onsite?
+
+select
+ case 
+  when job_location = 'Anywhere' then 'remoted_job'
+  Else 'Onsite'
+ End as location_category,
+ count (job_id)
+ from job_postings_fact
+ where
+ job_title_short = 'Data Analyst' and job_no_degree_mention = 'false' and salary_year_avg is not null
+group by location_category;
+
+*/ Which companies did they post the most jobs in 2023?/*
+
+select
+  count(company_dim.company_id) as company_count, 
+  company_dim.name
+
+from job_postings_fact
+
+full outer join company_dim on job_postings_fact.company_id = company_dim.company_id
+where
+job_title_short = 'Data Analyst' and job_no_degree_mention = 'true' and salary_year_avg is not null
+group by company_dim.name
+order by company_count DESC;
+
